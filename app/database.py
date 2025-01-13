@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.base import Base 
+#from app.models import AudioMetadat
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -8,7 +9,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-from app.models import AudioMetadat
 
 def create_tables():
     """Create database tables based on models."""
