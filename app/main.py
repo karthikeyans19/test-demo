@@ -11,6 +11,7 @@ app = FastAPI()
 SAMPLE_RATE = 4000
 
 def get_db():
+
     db = SessionLocal()
     try:
         yield db
