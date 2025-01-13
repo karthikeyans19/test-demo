@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float   # Error : remove Float as it is not used
 from app.base import Base
-from datetime import datetime
+from datetime import datetime # Error : remove datetime.datetime as it is not used
 
 class AudioMetadata(Base):
     __tablename__ = "audio_metadata"
