@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.base import Base 
-# from app.models import AudioMetadat
+# from app.models import AudioMetadata
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
