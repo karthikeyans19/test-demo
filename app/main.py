@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 
 app = FastAPI()
 
-SAMPLE_RATE = 4000 
+SAMPLE_RATE = 4000
 
 def get_db():
     db = SessionLocal()

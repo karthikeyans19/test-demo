@@ -1,6 +1,6 @@
-# from sqlalchemy import Column, Integer, String, Float # imported but unused
+from sqlalchemy import Column, Integer, String, Float
 from app.base import Base
-# from datetime import datetime # imported but unused
+from datetime import datetime
 
 class AudioMetadata(Base):
     __tablename__ = "audio_metadata"
@@ -11,3 +11,4 @@ class AudioMetadata(Base):
     file_name = Column(String)
 
     length_seconds = Column(Integer)
+

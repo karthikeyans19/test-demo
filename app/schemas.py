@@ -1,11 +1,10 @@
-# from pydantic import BaseModel, Field, @field_validator # Error : imported but unused, @missing for field_validator
+from pydantic import BaseModel, Field, @field_validator
 from typing import List, Optional
 from datetime import datetime
 import base64
 import numpy as np
 
 class AudioFile(BaseModel):
-
     file_name: str
     encoded_audio: str
 
