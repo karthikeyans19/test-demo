@@ -1,7 +1,6 @@
-from sqlalchemy import Column, Integer, String   # Error : remove Float as it is not used
+from sqlalchemy import Column, Integer, String
 from app.base import Base
-# from datetime import datetime   # Error : remove datetime.datetime as it is not used
-
+# from datetime import datetime  # Error: remove datetime.datetime as it is not used
 
 class AudioMetadata(Base):
     __tablename__ = "audio_metadata"
@@ -10,5 +9,4 @@ class AudioMetadata(Base):
     session_id = Column(String, index=True)
     timestamp = Column(String)
     file_name = Column(String)
-
     length_seconds = Column(Integer)

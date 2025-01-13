@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from app.schemas import ProcessAudioRequest, ProcessAudioResponse
 from app.models import AudioMetadata
-from app.database import SessionLocal, engine
+from app.database import SessionLocal    #Engine - Removed Engine as it is not used
 import numpy as np
 import base64
 from sqlalchemy.orm import Session
@@ -10,14 +10,12 @@ app = FastAPI()
 
 SAMPLE_RATE = 4000
 
-def get_db():
-
+def get_db() -> Session:  #Added --> session to initailize the database
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
-
 
 @app.post("/process-audio", response_model=ProcessAudioResponse)
 async def process_audio(request: ProcessAudioRequest, db: Session = Depends(get_db)):

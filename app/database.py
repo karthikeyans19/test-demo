@@ -1,14 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.base import Base
-# from app.models import AudioMetadata #Error : imported but unused
+from app.models import AudioMetadata
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 
 def create_tables():
 
@@ -22,7 +21,6 @@ def create_tables():
         print(f"Tables in metadata after create_all: {Base.metadata.tables.keys()}")
     except Exception as e:
         print(f"Error creating tables: {e}")
-
 
 if __name__ == "__main__":
     create_tables()
