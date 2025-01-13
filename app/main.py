@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends
 from app.schemas import ProcessAudioRequest, ProcessAudioResponse
-from app.models import AudioMetadata 
+from app.models import AudioMetadata
 # from app.database import SessionLocal, engine
 import numpy as np
 import base64
