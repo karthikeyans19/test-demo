@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from app.schemas import ProcessAudioRequest, ProcessAudioResponse
 from app.models import AudioMetadata 
-from app.database import SessionLocal, engine
+# from app.database import SessionLocal, engine
 import numpy as np
 import base64
 from sqlalchemy.orm import Session
@@ -17,6 +17,7 @@ def get_db():
     finally:
         db.close()
 
+
 @app.post("/process-audio", response_model=ProcessAudioResponse)
 async def process_audio(request: ProcessAudioRequest, db: Session = Depends(get_db)):
     processed_files = []
@@ -24,11 +25,11 @@ async def process_audio(request: ProcessAudioRequest, db: Session = Depends(get_
     for audio_file in request.audio_files:
         try:
             decoded_audio = base64.b64decode(audio_file.encoded_audio)
-            
+
             audio_data = np.frombuffer(decoded_audio, dtype=np.int16)
 
             length_seconds = len(audio_data) // SAMPLE_RATE
-            
+
             if length_seconds <= 0:
                 raise HTTPException(
                     status_code=400,
