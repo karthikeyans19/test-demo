@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
-from schemas import ProcessAudioRequest, ProcessAudioResponse
-from models import AudioMetadata
-from database import SessionLocal    # engine - removed not used
+from app.schemas import ProcessAudioRequest, ProcessAudioResponse
+from app.models import AudioMetadata
+from app.database import SessionLocal    # engine - removed not used
 import numpy as np
 import base64
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ app = FastAPI()
 
 SAMPLE_RATE = 4000
 
-def get_db():
+def get_db() -> Session:
 
 
     db = SessionLocal()
