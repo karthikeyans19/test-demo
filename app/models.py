@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String    # Float-removed as unused
-from .base import Base    # changed to relative import
+from base import Base    # changed to relative import
 # from datetime import datetime
 
 class AudioMetadata(Base):

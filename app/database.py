@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from .base import Base     # changed to relative import
+from base import Base     # changed to relative import
 # from .models import AudioMetadata
 # Corrected spelling of AudioMetadata and moved import in right place
 
