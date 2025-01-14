@@ -15,7 +15,7 @@ class AudioFile(BaseModel):
         except Exception:
             raise ValueError("Invalid Base64 encoding")
 
-# Updated Error message in validate_audio_length methods
+# Updated Error message in validate_audio_length method tp
 
     @field_validator('encoded_audio')
     def validate_audio_length(cls, encoded_audio: str):
