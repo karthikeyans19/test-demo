@@ -1,10 +1,17 @@
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import pytest
 from fastapi.testclient import TestClient
-from app.main import app, get_db
-from app.schemas import ProcessAudioRequest, AudioFile
+import numpy as np
+import base64
+from main import app, get_db
+from schemas import ProcessAudioRequest, AudioFile
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.database import Base
+from database import Base
+
+print("started")
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
@@ -24,6 +31,7 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 def test_process_audio_success():
+    print("Test Started1")
     audio_data = np.zeros(4000, dtype=np.int16).tobytes()
     encoded_audio = base64.b64encode(audio_data).decode('utf-8')
     request_data = ProcessAudioRequest(
@@ -37,6 +45,8 @@ def test_process_audio_success():
     assert len(response.json()["processed_files"]) == 1
     assert response.json()["processed_files"][0]["file_name"] == "test.wav"
     assert response.json()["processed_files"][0]["length_seconds"] == 1
+
+    print("Test Passed")
 
 def test_process_audio_invalid_length():
     audio_data = np.zeros(2000, dtype=np.int16).tobytes()

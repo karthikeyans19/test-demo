@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
-from app.base import Base
+# from app.base import Base
+from base import Base
 # from datetime import datetime  # Error: remove datetime.datetime as it is not used
 
 class AudioMetadata(Base):
