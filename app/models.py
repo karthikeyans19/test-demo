@@ -1,8 +1,9 @@
-from sqlalchemy import Column, Integer, String    # Float- removed as it is unused
+from sqlalchemy import Column, Integer, String    # Float-removed as unused
 from .base import Base    # changed to relative import
 # from datetime import datetime
 
 class AudioMetadata(Base):
+
 
     __tablename__ = "audio_metadata"
 
@@ -10,5 +11,5 @@ class AudioMetadata(Base):
     session_id = Column(String, index=True)
     timestamp = Column(String)
     file_name = Column(String)
-  
+
     length_seconds = Column(Integer)

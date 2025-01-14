@@ -1,8 +1,9 @@
-from pydantic import BaseModel, field_validator    # field - removed as it is unused
+from pydantic import BaseModel, field_validator  # field-removed as it is unused
 from typing import List, Optional
 from datetime import datetime
 import base64
 import numpy as np
+
 
 class AudioFile(BaseModel):
     file_name: str
@@ -32,7 +33,8 @@ class AudioFile(BaseModel):
 
         min_length_samples = 4000
         if len(audio_data) < min_length_samples:
-            raise ValueError(f"Audio file is too short. Minimum length is {min_length_samples / 4000} seconds.")
+            raise ValueError(f"Minimum length is {min_length_samples / 4000} seconds.")
+            # raise ValueError(f"Audio file is too short. Minimum length is {min_length_samples / 4000} seconds.")
 
         return encoded_audio
 
