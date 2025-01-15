@@ -3,6 +3,7 @@ from fastapi.encoders import isoformat
 from fastapi.testclient import TestClient
 from app.main import app
 import base64
+import json
 from app.schemas import ProcessAudioResponse
 
 client = TestClient(app)
