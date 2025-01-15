@@ -17,24 +17,21 @@ class AudioFile(BaseModel):
         except Exception:
             raise ValueError("Invalid Base64 encoding")
 
-# Updated Error message in validate_audio_length method tp
 
     @field_validator('encoded_audio')
     def validate_audio_length(cls, encoded_audio: str):
-        # try:
+        from app.main import SAMPLE_RATE
+        
         decoded_audio = base64.b64decode(encoded_audio)
-        #except Exception:
-         #   raise ValueError("Invalid Base64 encoding provided.")
-
+        
         audio_data = np.frombuffer(decoded_audio, dtype=np.int16)
 
         if len(audio_data) == 0:
             raise ValueError("Audio file is empty or has no valid data")
 
-        min_length_samples = 4000
+        min_length_samples = SAMPLE_RATE
         if len(audio_data) < min_length_samples:
-            #raise ValueError(f"Minimum length is {min_length_samples / 4000} seconds.")
-            raise ValueError(f"Audio file is too short. Minimum length is {min_length_samples / 4000} seconds.")
+            raise ValueError(f"Audio file is too short. Minimum length is {len(audio_data) / SAMPLE_RATE} seconds.")
 
         return encoded_audio
 

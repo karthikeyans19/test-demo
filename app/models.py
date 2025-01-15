@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String    # Float-removed as unused
-from app.base import Base    # changed to relative import
-# from datetime import datetime
+from sqlalchemy import Column, Integer, String, Float, DateTime
+from app.base import Base
+from datetime import datetime, timezone
 
 class AudioMetadata(Base):
 
@@ -9,6 +9,8 @@ class AudioMetadata(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     session_id = Column(String, index=True)
-    timestamp = Column(String)
+    # timestamp = Column(String)
+    timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))  # changed from String to DateTime
     file_name = Column(String)
-    length_seconds = Column(Integer)
+    length_seconds = Column(Float)   # changed from Integer to Float
+    # print("AudioMetadata")

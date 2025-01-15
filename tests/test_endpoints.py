@@ -1,13 +1,16 @@
+from datetime import datetime, timezone
+from fastapi.encoders import isoformat
 from fastapi.testclient import TestClient
 from app.main import app
 import base64
+from app.schemas import ProcessAudioResponse
 
 client = TestClient(app)
 
 def test_process_audio_valid():
     payload = {
         "session_id": "test_session",
-         "timestamp": "2023-01-01T00:00:00",
+         "timestamp": datetime.now(timezone.utc).isoformat(),
         "audio_files": [
             {
                 "file_name": "test.wav",
@@ -24,11 +27,12 @@ def test_process_audio_valid():
     response_json = response.json()
     assert response_json()["status"] == "success"
     assert len(response_json()["processed_files"]) == 1
+    
 
 def test_process_audio_invalid_base64():
     payload = {
         "session_id": "test_session",
-        "timestamp": "2025-01-14T00:00:00",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "audio_files": [
             {
                 "file_name": "test_file.wav",
@@ -39,4 +43,5 @@ def test_process_audio_invalid_base64():
     response = client.post("/process-audio", json=payload)
     #assert response.status_code == 400
     assert response.status_code == 422  # Expecting 422 Unprocessable Entity
-    #assert "Decoding error" in response.json()["detail"]
+    response_json = response.json()
+

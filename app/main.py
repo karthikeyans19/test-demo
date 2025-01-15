@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Depends
 from app.schemas import ProcessAudioRequest, ProcessAudioResponse
 from app.models import AudioMetadata
-from app.database import SessionLocal    # engine - removed not used
+from app.database import SessionLocal    # engine - removed as it is not used
 import numpy as np
 import base64
 from sqlalchemy.orm import Session
@@ -10,7 +10,7 @@ app = FastAPI()
 
 SAMPLE_RATE = 4000
 
-def get_db() -> Session:
+def get_db() -> Session: # type: ignore
 
 
     db = SessionLocal()
@@ -30,7 +30,7 @@ async def process_audio(request: ProcessAudioRequest, db: Session = Depends(get_
   
             audio_data = np.frombuffer(decoded_audio, dtype=np.int16)
 
-            length_seconds = len(audio_data) // SAMPLE_RATE
+            length_seconds = len(audio_data) / SAMPLE_RATE
 
             if length_seconds <= 0:
                 raise HTTPException(
