@@ -3,31 +3,34 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.models import AudioMetadata  # Use relative import
 from app.base import Base  # Use relative import
+from app.database import create_tables, SessionLocal  # Use absolute import
+from datetime import datetime
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL, echo=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-@pytest.fixture(scope="module")
+@pytest.fixture
 def db_session():
-    Base.metadata.create_all(bind=engine)
     session = SessionLocal()
     yield session
     session.close()
-    Base.metadata.drop_all(bind=engine)
 
-def test_create_read_update_audio_metadata(db_session):
+def test_create_tables():
+    try:
+        create_tables()
+        assert True
+    except Exception as e:
+        pytest.fail(f"Table creation failed: {e}")
+
+def test_crud_operations(db_session):
     # Create
     audio = AudioMetadata(
         session_id="test_session",
-        timestamp="2023-01-01T00:00:00",
+        # timestamp=datetime.strptime("2025-01-14T00:00:00", "%Y-%m-%dT%H:%M:%S"),  # Ensure timestamp is a datetime object
+        timestamp=datetime.now(),
         file_name="test_file.wav",
         length_seconds=120
     )
     db_session.add(audio)
     db_session.commit()
-
+    
     # Read
     fetched_audio = db_session.query(AudioMetadata).filter_by(file_name="test_file.wav").first()
     assert fetched_audio is not None
@@ -38,3 +41,8 @@ def test_create_read_update_audio_metadata(db_session):
     db_session.commit()
     updated_audio = db_session.query(AudioMetadata).filter_by(file_name="test_file.wav").first()
     assert updated_audio.length_seconds == 150
+
+    # Delete
+    db_session.delete(updated_audio)
+    db_session.commit()
+    assert db_session.query(AudioMetadata).filter_by(file_name="test_file.wav").first() is None
