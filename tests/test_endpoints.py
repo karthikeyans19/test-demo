@@ -22,6 +22,8 @@ def test_process_audio_valid():
     #assert response.status_code == 200
     #assert response.status_code == 400
     if response.status_code != 200:
+        print(f"Response status code: {response.status_code}")
+        print(f"Response JSON: {json.dumps(response.json(), indent=4)}")
         print(response.json())  # Print the response JSON for debugging
     assert response.status_code == 200
     response_json = response.json()
